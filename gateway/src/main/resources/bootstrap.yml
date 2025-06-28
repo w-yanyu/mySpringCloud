@@ -1,0 +1,18 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: gateway
+  profiles:
+    active: sit
+  cloud:
+    nacos:
+      server-addr: localhost:80
+      discovery:
+        namespace: 968f4684-cb34-4295-81bb-e405f8d543d7 # 命名空间 填id
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/** #路径断言  127.0.0.1:10010/user/getUser/111 -> 127.0.0.1:8082/user/getUser/111

@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: order-service
+  profiles:
+    active: sit
+  cloud:
+    nacos:
+      server-addr: localhost:80
+      discovery:
+        cluster-name: DTYZQ #集群名
+        namespace: 968f4684-cb34-4295-81bb-e405f8d543d7 # 命名空间 填id
+      config:
+        namespace: 968f4684-cb34-4295-81bb-e405f8d543d7 # 命名空间 填id
+        file-extension: yml # nacos配置文件后缀
+        group: SIT_GROUP

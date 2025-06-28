@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mycloud?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: yanyu
+    password: 123456
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:/mapper/*.xml,classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml #classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml为自动生成表结构的mapper.xml
+
+mybatis:
+  table:
+    auto: update # 自动生成数据库ddl建表sql
+  model:
+    pack: com.example.common.entity  #扫描自己用于创建表的对象的包名，多个包用“,”隔开
+  database:
+    type: mysql #数据库类型
+
+logging:
+  level:
+    com.alibaba.nacos.client.config.*: warn
+    com:
+      example: debug #com.cloud为包路径,debug使feign打印日志生效，其他高级别不生效
+
+rocketmq:
+  name-server: 172.19.138.62:9876 #rocketMQ服务的地址
+  producer:
+    group: shop-order # 生产者组
+
+mq:
+  order:
+    topic: shop-order-topic
+    group: shop-order
