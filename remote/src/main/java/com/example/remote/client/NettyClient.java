@@ -10,6 +10,6 @@ package com.example.remote.client;
 public class NettyClient {
 
     public String send (String host,String port,String message) {
-
+        return null;
     }
 }

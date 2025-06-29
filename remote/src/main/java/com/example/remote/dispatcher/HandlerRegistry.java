@@ -1,6 +1,6 @@
 package com.example.remote.dispatcher;
 
-import com.example.remote.annotations.Channel;
+import com.example.remote.annotations.RemoteChannel;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -36,15 +36,15 @@ public class HandlerRegistry implements ApplicationContextAware {
         for (Object bean : beans.values()) {
             Method[] methods = bean.getClass().getDeclaredMethods();
             for (Method method : methods) {
-                Channel channel = method.getAnnotation(Channel.class);
-                if(channel != null){
-                    handlerMap.put(channel.system()+channel.endpoint(),method);
+                RemoteChannel channel = method.getAnnotation(RemoteChannel.class);
+                if (channel != null) {
+                    handlerMap.put(channel.systemId() + method.getName(), method);
                 }
             }
         }
     }
 
-    public Object dispatcher(String system,String endpoint,Map<String,Object> payload) throws Exception {
+    public Object dispatcher(String system, String endpoint, Map<String, Object> payload) throws Exception {
         String key = system + ":" + endpoint;
         Method method = handlerMap.get(key);
         if (method == null) throw new RuntimeException("No handler for " + key);
