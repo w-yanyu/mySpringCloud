@@ -1,9 +1,14 @@
 package com.example.task;
 
+import com.example.common.aspect.WebLogAspectHandler;
+import com.example.common.config.MybatisPlusConfig;
+import com.example.common.config.NormalConfig;
+import com.example.common.property.FileProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 /**
  * @ClassName TaskApplication
@@ -13,9 +18,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @Description TODO
  **/
 @SpringBootApplication
-//@Import({NormalConfig.class})
-@ComponentScan({"com.example.common.mapper","com.example.task"})
-@MapperScan(basePackages = {"com.example.common.mapper"})
+@MapperScan(basePackages = {"com.example.task.mapper"})
+@Import({WebLogAspectHandler.class, MybatisPlusConfig.class, NormalConfig.class, FileProperties.class})
 public class TaskApplication {
     public static void main(String[] args) {
         SpringApplication.run(TaskApplication.class, args);

@@ -3,15 +3,9 @@ package com.example.common.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.example.common.enumeration.TranEnum;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
-import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 
 /**
  * @ClassName Timer
@@ -64,7 +58,7 @@ public class Timer extends CommEntity{
     private String dayOfWeek;
 
     @Column(comment = "状态",length = 16)
-    private TranEnum.TimerStatus status;
+    private String status;
 
     @Column(comment = "执行任务id", length = 64)
     private String taskId;

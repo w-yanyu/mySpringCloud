@@ -1,4 +1,4 @@
-package com.example.common.mapper;
+package com.example.task.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.common.entity.Timer;
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * @Description TODO
  **/
 @Repository
-public interface ScheduledTaskMapper extends BaseMapper<Timer> {
+public interface TimerMapper extends BaseMapper<Timer> {
 }

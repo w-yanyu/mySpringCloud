@@ -2,7 +2,7 @@ package com.example.task.timer;
 
 import com.example.common.entity.Timer;
 import com.example.common.enumeration.TranEnum;
-import com.example.common.mapper.ScheduledTaskMapper;
+import com.example.task.mapper.TimerMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -29,7 +29,7 @@ public class BatchTimerSchedulerPollThread extends AbstractPollThread {
     private boolean master = true;
 
     @Autowired
-    private ScheduledTaskMapper scheduledTaskMapper;
+    private TimerMapper timerMapper;
 
     @Autowired
     private TransactionTemplate transactionTemplate;
@@ -38,14 +38,14 @@ public class BatchTimerSchedulerPollThread extends AbstractPollThread {
     public void process() {
         this.transactionTemplate.execute(status -> {
             try {
-                List<com.example.common.entity.Timer> timers = scheduledTaskMapper.selectList(null);
+                List<com.example.common.entity.Timer> timers = timerMapper.selectList(null);
                 if (!this.master) {
                     this.process(timers);
                 } else {
                     this.process(timers);
                 }
                 return true;
-            }catch (Exception e){
+            } catch (Exception e) {
                 status.setRollbackOnly(); // 发生异常时回滚
                 return false;
             }
@@ -58,12 +58,12 @@ public class BatchTimerSchedulerPollThread extends AbstractPollThread {
             while (iterator.hasNext()) {
                 Timer timer = iterator.next();
                 try {
-                    switch (timer.getStatus()) {
+                    switch (TranEnum.TimerStatus.valueOf(timer.getStatus())) {
                         case START:
                             this.timerSchedulerServer.addJob(timer);
-                            timer.setStatus(TranEnum.TimerStatus.SCHEDULING);
+                            timer.setStatus(TranEnum.TimerStatus.SCHEDULING.name());
                             this.transactionTemplate.execute(status -> {
-                                scheduledTaskMapper.updateById(timer);
+                                timerMapper.updateById(timer);
                                 return true;
                             });
                             log.info("状态{}的任务{}已经添加到Quartz!", timer.getStatus(), timer.getTranGroup() + "-" + timer.getTaskId() + ":" + timer.getTranDescribe());
@@ -74,9 +74,9 @@ public class BatchTimerSchedulerPollThread extends AbstractPollThread {
                             break;
                         case STOPPING:
                             this.timerSchedulerServer.deleteJob(timer);
-                            timer.setStatus(TranEnum.TimerStatus.STOPPED);
+                            timer.setStatus(TranEnum.TimerStatus.STOPPED.name());
                             this.transactionTemplate.execute(status -> {
-                                scheduledTaskMapper.updateById(timer);
+                                timerMapper.updateById(timer);
                                 return true;
                             });
                             break;
@@ -85,13 +85,13 @@ public class BatchTimerSchedulerPollThread extends AbstractPollThread {
                         case DELETE:
                             this.timerSchedulerServer.deleteJob(timer);
                             this.transactionTemplate.execute(status -> {
-                                scheduledTaskMapper.deleteById(timer);
+                                timerMapper.deleteById(timer);
                                 return true;
                             });
                             break;
                     }
                 } catch (Exception e) {
-                    log.error("异常：{}", e);
+                    log.error("异常：", e);
                 }
             }
         }

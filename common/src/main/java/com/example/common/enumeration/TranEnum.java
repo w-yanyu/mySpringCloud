@@ -9,7 +9,7 @@ package com.example.common.enumeration;
  **/
 public class TranEnum {
 
-    public enum TimerStatus{
+    public enum TimerStatus {
         /**
          * 启动
          */
@@ -33,7 +33,6 @@ public class TranEnum {
         /**
          * 删除
          */
-        DELETE
-        ;
+        DELETE;
     }
 }

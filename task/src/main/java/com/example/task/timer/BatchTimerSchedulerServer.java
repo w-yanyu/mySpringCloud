@@ -2,6 +2,7 @@ package com.example.task.timer;
 
 import com.example.common.entity.Timer;
 import com.example.common.utils.ReflectionUtil;
+import com.example.task.service.TaskSubmitJob;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
@@ -31,7 +32,7 @@ public class BatchTimerSchedulerServer {
     private Scheduler scheduler;
 
     public void startup() {
-        if (!isStarted){
+        if (!isStarted) {
             try {
                 this.scheduler = StdSchedulerFactory.getDefaultScheduler();
                 this.scheduler.start();
@@ -67,7 +68,7 @@ public class BatchTimerSchedulerServer {
             String cronExpression = timer.getCronExpression();
             Trigger trigger = TriggerBuilder.newTrigger().withIdentity(TRIGGER_NAME_PREFIX + timer.getTranGroup() + timer.getTranId(), TRIGGER_GROUP).forJob(jobDetail).withSchedule(CronScheduleBuilder.cronSchedule(cronExpression)).build();
             if (this.scheduler.checkExists(jobDetail.getKey())) {
-                log.info("任务{}已存在", timer.getTranGroup() + timer.getTranId());
+                log.info("任务{}已存在，不进行处理", timer.getTranGroup() + timer.getTranId());
             } else {
                 this.scheduler.scheduleJob(jobDetail, trigger);
             }
@@ -91,7 +92,7 @@ public class BatchTimerSchedulerServer {
             this.scheduler.deleteJob(jobKey);
             log.info("删除任务{}成功", timer.getTranGroup() + timer.getTranId());
         } catch (SchedulerException e) {
-            log.error("删除任务{}失败", timer.getTranGroup() + timer.getTranId(),e);
+            log.error("删除任务{}失败", timer.getTranGroup() + timer.getTranId(), e);
         }
     }
 
