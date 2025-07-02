@@ -1,5 +1,6 @@
 package com.example.remote;
 
+import com.example.remote.annotations.RemoteChannelScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -12,9 +13,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @Description TODO
  **/
 @SpringBootApplication
-@EnableDiscoveryClient
-public class RomoteApplication {
+@RemoteChannelScan(basePackages = {"com.example.remote.service"})
+public class RemoteApplication {
     public static void main(String[] args) {
-        SpringApplication.run(RomoteApplication.class, args);
+        SpringApplication.run(RemoteApplication.class, args);
     }
 }

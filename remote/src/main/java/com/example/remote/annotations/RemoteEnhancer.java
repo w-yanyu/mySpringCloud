@@ -1,7 +1,6 @@
 package com.example.remote.annotations;
 
-
-import org.springframework.core.annotation.AliasFor;
+import com.example.remote.manager.impl.DefaultRemoteEnhancerManager;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,12 +9,10 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RemoteChannel {
+public @interface RemoteEnhancer {
+    String value() default DefaultRemoteEnhancerManager.WILDCARD;
 
-    @AliasFor("systemId")
-    String value() default "";
+    String[] methods() default {};
 
-    @AliasFor("value")
-    String systemId() default "";
-
+    int order() default Integer.MAX_VALUE/2;
 }

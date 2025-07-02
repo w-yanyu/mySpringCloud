@@ -1,7 +1,7 @@
 package com.example.remote.service;
 
 import com.example.remote.annotations.RemoteChannel;
-import com.example.remote.annotations.ServiceCode;
+import com.example.remote.annotations.RemoteServiceCode;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import java.util.Map;
 @RemoteChannel
 public interface Pudao {
 
-    @ServiceCode
+    @RemoteServiceCode
     Map<String,Object> taxInformation(Map<String,Object> input);
 
 
