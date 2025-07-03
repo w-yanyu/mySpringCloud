@@ -1,7 +1,7 @@
 package com.example.remote.service;
 
-import com.example.remote.annotations.RemoteChannel;
-import com.example.remote.annotations.RemoteServiceCode;
+import com.example.remote.annotation.RemoteChannel;
+import com.example.remote.annotation.RemoteServiceCode;
 
 import java.util.Map;
 

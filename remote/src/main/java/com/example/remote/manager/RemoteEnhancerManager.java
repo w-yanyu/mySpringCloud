@@ -13,7 +13,7 @@ public interface RemoteEnhancerManager {
      * @param enhancer
      * @param order
      */
-    void registerInterceptor(String channel, String method, RemoteProxyEnhancer enhancer, int order);
+    void registerEnhancer(String channel, String method, RemoteProxyEnhancer enhancer, int order);
 
     /**
      * 获取指定渠道和方法的增强器，并根据 order 排序

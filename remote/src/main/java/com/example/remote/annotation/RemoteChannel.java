@@ -1,4 +1,4 @@
-package com.example.remote.annotations;
+package com.example.remote.annotation;
 
 
 import org.springframework.core.annotation.AliasFor;

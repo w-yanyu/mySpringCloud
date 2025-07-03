@@ -1,20 +1,27 @@
 package com.example.remote.manager.impl;
 
-import com.example.remote.annotations.RemoteEnhancer;
+import com.example.remote.annotation.RemoteEnhancer;
 import com.example.remote.constant.SymbolConstants;
 import com.example.remote.interfaces.RemoteProxyEnhancer;
 import com.example.remote.manager.RemoteEnhancerManager;
-import com.example.remote.utils.Assert;
-import com.example.remote.utils.StringUtils;
+import com.example.remote.util.Assert;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class DefaultRemoteEnhancerManager implements RemoteEnhancerManager {
 
+    private static final DefaultRemoteEnhancerManager instance = new DefaultRemoteEnhancerManager();
+
     public static final String WILDCARD = SymbolConstants.WILDCARD;
 
     private static final String DELIMITER = SymbolConstants.WILDCARD;
+
+    private DefaultRemoteEnhancerManager (){}
+
+    public static DefaultRemoteEnhancerManager getInstance(){
+        return instance;
+    }
 
     /**
      * 存储渠道 -> 方法 -> 拦截器，通用方法使用 "#" 作为标识
@@ -26,7 +33,7 @@ public class DefaultRemoteEnhancerManager implements RemoteEnhancerManager {
     private final Map<String, List<RemoteProxyEnhancer>> methodEnhancerMap = new HashMap<>();
 
     @Override
-    public void registerInterceptor(String channel, String method, RemoteProxyEnhancer enhancer, int order) {
+    public void registerEnhancer(String channel, String method, RemoteProxyEnhancer enhancer, int order) {
         Assert.hasLength(channel, "parameter channel is null");
         if (WILDCARD.equals(channel)) {
             generalEnhancer.add(enhancer);

@@ -1,8 +1,8 @@
-package com.spring.remote.config;
+package com.example.spring.remote.config;
 
 import com.example.remote.RemoteApplication;
-import com.example.remote.annotations.RemoteChannel;
-import com.example.remote.annotations.RemoteChannelScan;
+import com.example.remote.annotation.RemoteChannel;
+import com.example.spring.remote.annotation.RemoteChannelScan;
 import org.reflections.Reflections;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

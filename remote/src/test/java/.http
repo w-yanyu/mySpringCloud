@@ -1,0 +1,8 @@
+POST http://localhost:8085/test/query
+Content-Type: application/json
+
+{
+  "title": "foo",
+  "body": "bar",
+  "userId": 1
+}

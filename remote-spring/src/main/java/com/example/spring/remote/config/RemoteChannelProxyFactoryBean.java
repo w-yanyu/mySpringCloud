@@ -1,15 +1,26 @@
-package com.spring.remote.config;
+package com.example.spring.remote.config;
 
+import com.example.remote.config.RemoteChannelProxyFactory;
+import com.example.remote.manager.impl.DefaultRemoteEnhancerManager;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 public class RemoteChannelProxyFactoryBean implements FactoryBean<Object> {
 
     public static final String PROPERTY_NAME = "interfaces";
 
+    private InvocationHandler invocationHandler;
+
     private Class<?> interfaces;
+
+    {
+        //invocationHandler =
+        DefaultRemoteEnhancerManager defaultRemoteEnhancerManager = DefaultRemoteEnhancerManager.getInstance();
+        //defaultRemoteEnhancerManager.registerEnhancer();
+    }
 
     public RemoteChannelProxyFactoryBean(Class<?> interfaces) {
         this.interfaces = interfaces;

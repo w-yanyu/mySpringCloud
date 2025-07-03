@@ -1,9 +1,8 @@
 package com.example.remote;
 
-import com.example.remote.annotations.RemoteChannelScan;
+import com.example.remote.annotation.RemoteChannelScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @ClassName RomoteApplication

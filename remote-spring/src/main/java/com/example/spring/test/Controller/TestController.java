@@ -1,4 +1,4 @@
-package com.example.remote.Controller;
+package com.example.spring.test.Controller;
 
 import com.example.common.entity.User;
 import com.example.remote.service.Pudao;

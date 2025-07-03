@@ -1,4 +1,4 @@
-package com.example.remote.annotations;
+package com.example.remote.annotation;
 
 import com.example.remote.manager.impl.DefaultRemoteEnhancerManager;
 
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 public @interface RemoteEnhancer {
     String value() default DefaultRemoteEnhancerManager.WILDCARD;
 
-    String[] methods() default {};
+    String[] methods() default {DefaultRemoteEnhancerManager.WILDCARD};
 
     int order() default Integer.MAX_VALUE/2;
 }

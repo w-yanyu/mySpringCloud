@@ -1,4 +1,4 @@
-package com.example.remote.utils;
+package com.example.remote.util;
 
 public class Assert {
 
