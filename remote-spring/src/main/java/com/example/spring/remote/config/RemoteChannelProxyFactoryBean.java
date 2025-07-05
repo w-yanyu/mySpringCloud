@@ -28,13 +28,10 @@ public class RemoteChannelProxyFactoryBean implements FactoryBean<Object> {
 
     @Override
     public Object getObject() throws Exception {
-        System.out.println("hehehheh"+interfaces);
         Object o = Proxy.newProxyInstance(
                 getClass().getClassLoader(),
                 new Class[]{interfaces},
                 (proxy, method, args) -> {
-                    System.out.println("Executing class name : " + getObjectType());
-                    System.out.println("Executing method: " + method.getName());
                     return null;  // 适当返回值
                 }
         );

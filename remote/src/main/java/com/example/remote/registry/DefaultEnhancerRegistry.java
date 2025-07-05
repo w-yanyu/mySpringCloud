@@ -1,11 +1,10 @@
 package com.example.remote.registry;
 
 import com.example.remote.annotation.RemoteEnhancer;
-import com.example.remote.interfaces.RemoteProxyEnhancer;
+import com.example.remote.enhancer.RemoteProxyEnhancer;
 import com.example.remote.manager.RemoteEnhancerManager;
 import com.example.remote.manager.impl.DefaultRemoteEnhancerManager;
 
-import java.util.Iterator;
 import java.util.ServiceLoader;
 
 public class DefaultEnhancerRegistry {
@@ -25,5 +24,4 @@ public class DefaultEnhancerRegistry {
         }
         return enhancerManager;
     }
-
 }

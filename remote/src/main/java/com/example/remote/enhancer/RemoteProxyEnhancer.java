@@ -1,4 +1,4 @@
-package com.example.remote.interfaces;
+package com.example.remote.enhancer;
 
 import java.lang.reflect.Method;
 

@@ -1,4 +1,4 @@
-package com.example.remote.InvocationHandler;
+package com.example.remote.invocationHandler;
 
 import java.lang.reflect.InvocationHandler;
 

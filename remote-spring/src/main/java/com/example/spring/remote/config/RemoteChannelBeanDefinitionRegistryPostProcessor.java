@@ -1,6 +1,5 @@
 package com.example.spring.remote.config;
 
-import com.example.remote.RemoteApplication;
 import com.example.remote.annotation.RemoteChannel;
 import com.example.spring.remote.annotation.RemoteChannelScan;
 import org.reflections.Reflections;

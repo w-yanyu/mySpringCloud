@@ -1,4 +1,4 @@
-package com.example.remote.service;
+package com.example.spring.test.service;
 
 import com.example.remote.annotation.RemoteChannel;
 import com.example.remote.annotation.RemoteServiceCode;

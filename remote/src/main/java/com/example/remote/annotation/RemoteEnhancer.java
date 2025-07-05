@@ -14,5 +14,5 @@ public @interface RemoteEnhancer {
 
     String[] methods() default {DefaultRemoteEnhancerManager.WILDCARD};
 
-    int order() default Integer.MAX_VALUE/2;
+    int order() default Integer.MAX_VALUE / 2;
 }

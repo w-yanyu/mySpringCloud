@@ -1,5 +1,7 @@
 package com.example.remote.util;
 
+import java.lang.reflect.Method;
+
 public class StringUtils {
     public static boolean isEmpty(String str) {
         return str == null || str.length() == 0 || "".equals(str.trim());
@@ -17,5 +19,13 @@ public class StringUtils {
             }
         }
         return className;
+    }
+
+    public static String determineBeanNameFromClass(Class<?> clazz, String defaultValue) {
+        return isEmpty(defaultValue) ? determineBeanNameFromClass(clazz.getSimpleName()) : defaultValue;
+    }
+
+    public static String determineMethodName(Method method, String defaultValue) {
+        return isEmpty(defaultValue) ? method.getName() : defaultValue;
     }
 }

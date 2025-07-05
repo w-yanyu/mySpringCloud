@@ -2,12 +2,11 @@ package com.example.remote.manager.impl;
 
 import com.example.remote.annotation.RemoteEnhancer;
 import com.example.remote.constant.SymbolConstants;
-import com.example.remote.interfaces.RemoteProxyEnhancer;
+import com.example.remote.enhancer.RemoteProxyEnhancer;
 import com.example.remote.manager.RemoteEnhancerManager;
 import com.example.remote.util.Assert;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DefaultRemoteEnhancerManager implements RemoteEnhancerManager {
 
@@ -17,9 +16,10 @@ public class DefaultRemoteEnhancerManager implements RemoteEnhancerManager {
 
     private static final String DELIMITER = SymbolConstants.WILDCARD;
 
-    private DefaultRemoteEnhancerManager (){}
+    private DefaultRemoteEnhancerManager() {
+    }
 
-    public static DefaultRemoteEnhancerManager getInstance(){
+    public static DefaultRemoteEnhancerManager getInstance() {
         return instance;
     }
 
@@ -34,7 +34,7 @@ public class DefaultRemoteEnhancerManager implements RemoteEnhancerManager {
 
     @Override
     public void registerEnhancer(String channel, String method, RemoteProxyEnhancer enhancer, int order) {
-        Assert.hasLength(channel, "parameter channel is null");
+        Assert.hasLength(channel, "parameter channel is empty");
         if (WILDCARD.equals(channel)) {
             generalEnhancer.add(enhancer);
             return;
@@ -49,18 +49,16 @@ public class DefaultRemoteEnhancerManager implements RemoteEnhancerManager {
 
     @Override
     public List<RemoteProxyEnhancer> getEnhancers(String channel, String method) {
-        Assert.hasLength(channel, "parameter channel is null");
-        Assert.hasLength(method, "parameter method is null");
+        Assert.hasLength(channel, "parameter channel is empty");
+        Assert.hasLength(method, "parameter method is empty");
 
         String key = channel + DELIMITER + method;
         return methodEnhancerMap.computeIfAbsent(key, k -> {
-            Set<RemoteProxyEnhancer> enhancers = new HashSet<>(generalEnhancer);
+            Set<RemoteProxyEnhancer> enhancers = new TreeSet<>(Comparator.comparingInt(this::getEnhancerOrder));
+            enhancers.addAll(generalEnhancer);
             enhancers.addAll(getEnhancersForMethod(channel, WILDCARD));
             enhancers.addAll(getEnhancersForMethod(channel, method));
-
-            return enhancers.stream()
-                    .sorted(Comparator.comparingInt(this::getEnhancerOrder))
-                    .collect(Collectors.toList());
+            return new ArrayList<>(enhancers);
         });
     }
 
@@ -70,7 +68,12 @@ public class DefaultRemoteEnhancerManager implements RemoteEnhancerManager {
     }
 
     private int getEnhancerOrder(RemoteProxyEnhancer enhancer) {
-        RemoteEnhancer annotation = enhancer.getClass().getAnnotation(RemoteEnhancer.class);
-        return annotation.order();
+        Class<? extends RemoteProxyEnhancer> clazz = enhancer.getClass();
+        if (!clazz.isAnnotationPresent(RemoteEnhancer.class)) {
+            throw new IllegalArgumentException(clazz.getName() + " is not annotated with @RemoteChannel");
+        }
+        RemoteEnhancer remoteEnhancer = clazz.getAnnotation(RemoteEnhancer.class);
+        return remoteEnhancer.order();
     }
+
 }

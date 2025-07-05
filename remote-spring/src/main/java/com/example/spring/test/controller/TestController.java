@@ -1,16 +1,12 @@
-package com.example.spring.test.Controller;
+package com.example.spring.test.controller;
 
-import com.example.common.entity.User;
-import com.example.remote.service.Pudao;
+import com.example.spring.test.service.Pudao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 

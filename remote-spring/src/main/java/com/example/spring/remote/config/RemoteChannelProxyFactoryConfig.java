@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
 public class RemoteChannelProxyFactoryConfig {
 
     public RemoteChannelProxyFactory remoteChannelProxyFactory(){
-        return new RemoteChannelProxyFactory(null);
+        return new RemoteChannelProxyFactory();
     }
 }

@@ -1,6 +1,6 @@
 package com.example.remote.manager;
 
-import com.example.remote.interfaces.RemoteProxyEnhancer;
+import com.example.remote.enhancer.RemoteProxyEnhancer;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ public interface RemoteEnhancerManager {
 
     /**
      * 注册增强器
+     *
      * @param channel
      * @param method
      * @param enhancer
@@ -17,6 +18,7 @@ public interface RemoteEnhancerManager {
 
     /**
      * 获取指定渠道和方法的增强器，并根据 order 排序
+     *
      * @param channel
      * @param method
      * @return

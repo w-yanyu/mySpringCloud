@@ -1,10 +1,11 @@
 package com.example.remote.config;
 
-import com.example.remote.InvocationHandler.RemoteChannelHandler;
 import com.example.remote.annotation.RemoteChannel;
-import com.example.remote.interfaces.RemoteProxyEnhancer;
+import com.example.remote.annotation.RemoteServiceCode;
+import com.example.remote.enhancer.RemoteProxyEnhancer;
+import com.example.remote.invocationHandler.RemoteChannelHandler;
 import com.example.remote.manager.RemoteEnhancerManager;
-import com.example.remote.util.StringUtils;
+import com.example.remote.util.AnnotationUtils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -14,45 +15,45 @@ public class RemoteChannelProxyFactory implements InvocationHandler {
 
     private RemoteChannelHandler handler;
 
-    private final RemoteEnhancerManager enhancerManager;
+    private RemoteEnhancerManager enhancerManager;
 
     private Class<?> remoteChannelClass;
 
-    public RemoteChannelProxyFactory(RemoteEnhancerManager enhancerManager) {
-        this.enhancerManager = enhancerManager;
-    }
-
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        RemoteChannel remoteChannel = remoteChannelClass.getAnnotation(RemoteChannel.class);
-        String systemId = StringUtils.isEmpty(remoteChannel.systemId())? remoteChannelClass.getSimpleName():remoteChannel.systemId();
-        String channel = StringUtils.determineBeanNameFromClass(systemId);
-        List<RemoteProxyEnhancer> enhancers = enhancerManager.getEnhancers(channel, method.getName());
+        String channel = AnnotationUtils.getBeanNameFromClass(remoteChannelClass, RemoteChannel.class, "value");
+        String methodName = AnnotationUtils.getMethodNameFromAnnotation(method, RemoteServiceCode.class, "value");
+        List<RemoteProxyEnhancer> enhancers = enhancerManager.getEnhancers(channel, methodName);
         for (RemoteProxyEnhancer enhancer : enhancers) {
-            enhancer.before(channel, method.getName(),proxy, method, args);
+            Object before = enhancer.before(channel, methodName, proxy, method, args);
         }
 
-        Object result = handler.invoke(proxy, method, args);
+        Object result = handler == null ? null : handler.invoke(proxy, method, args);
 
         for (int i = enhancers.size() - 1; i >= 0; i--) {
-            result = enhancers.get(i).after(channel, method.getName(),proxy, method, args, result);
+            result = enhancers.get(i).after(channel, methodName, proxy, method, args, result);
         }
         return result;
     }
 
-    public Class<?> getRemoteChannelClass() {
-        return remoteChannelClass;
+    public RemoteChannelProxyFactory() {
     }
 
-    public void setRemoteChannelClass(Class<?> remoteChannelClass) {
+    public RemoteChannelProxyFactory(RemoteChannelHandler handler, RemoteEnhancerManager enhancerManager, Class<?> remoteChannelClass) {
+        this.handler = handler;
+        this.enhancerManager = enhancerManager;
         this.remoteChannelClass = remoteChannelClass;
-    }
-
-    public RemoteChannelHandler getHandler() {
-        return handler;
     }
 
     public void setHandler(RemoteChannelHandler handler) {
         this.handler = handler;
+    }
+
+    public void setEnhancerManager(RemoteEnhancerManager enhancerManager) {
+        this.enhancerManager = enhancerManager;
+    }
+
+    public void setRemoteChannelClass(Class<?> remoteChannelClass) {
+        this.remoteChannelClass = remoteChannelClass;
     }
 }
