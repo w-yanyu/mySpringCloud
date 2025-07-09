@@ -1,5 +1,5 @@
-import com.example.remote.annotation.RemoteEnhancer;
-import com.example.remote.enhancer.RemoteProxyEnhancer;
+import org.remote.annotation.RemoteEnhancer;
+import org.remote.enhancer.RemoteProxyEnhancer;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

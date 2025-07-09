@@ -9,5 +9,4 @@ public interface OrderService {
     Order getOrderByOid(String oid);
 
     void saveOrders(List<Order> orders);
-
 }

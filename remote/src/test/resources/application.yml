@@ -1,0 +1,7 @@
+remote_channel:
+  - id: pudao
+    handler: customize
+  - id: bairong
+    handler: customize
+  - id: baihang
+    handler: customize

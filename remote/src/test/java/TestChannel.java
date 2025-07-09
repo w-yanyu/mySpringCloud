@@ -1,10 +1,10 @@
-import com.example.remote.annotation.RemoteChannel;
-import com.example.remote.annotation.RemoteServiceCode;
+import org.remote.annotation.RemoteChannel;
+import org.remote.annotation.RemoteServiceCode;
 
-//@RemoteChannel("testChannel001")
+@RemoteChannel("core")
 public interface TestChannel {
 
-    @RemoteServiceCode("request01")
+    @RemoteServiceCode("s005001")
     void method01(String[] args);
 
     void method02(String[] args);

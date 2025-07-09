@@ -106,3 +106,6 @@ remote.channel.handler=customize
     ├──application.properties
 ```
 
+```bash
+mvn install:install-file -DgroupId=org.remote -DartifactId=remote -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar -Dfile=./remote-0.0.1-SNAPSHOT.jar -DlocalRepositoryPath=C:/mvnrepository
+```

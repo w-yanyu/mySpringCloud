@@ -1,4 +1,4 @@
-import com.example.remote.service.Remote;
+import org.remote.service.Remote;
 
 public class Test {
     public static void main(String[] args) {

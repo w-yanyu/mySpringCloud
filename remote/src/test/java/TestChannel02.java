@@ -1,5 +1,4 @@
-import com.example.remote.annotation.RemoteChannel;
-import com.example.remote.annotation.RemoteServiceCode;
+import org.remote.annotation.RemoteChannel;
 
 @RemoteChannel("testChannel002")
 public interface TestChannel02 {
