@@ -2,23 +2,22 @@ package org.remote.spring.config;
 
 import java.util.List;
 
-public class ChannelConfig {
 
-    private List<Channel> channel;
+public class RemoteChannelConfig {
+    private List<RemoteChannel> remoteChannel;
 
-    public List<Channel> getChannel() {
-        return channel;
+    public List<RemoteChannel> getRemoteChannel() {
+        return remoteChannel;
     }
 
-    public void setChannel(List<Channel> channel) {
-        this.channel = channel;
+    public void setRemoteChannel(List<RemoteChannel> remoteChannel) {
+        this.remoteChannel = remoteChannel;
     }
 
-    public static class Channel {
+    public static class RemoteChannel {
         private String id;
         private String handler;
 
-        // Getter and Setter
         public String getId() {
             return id;
         }
@@ -33,11 +32,6 @@ public class ChannelConfig {
 
         public void setHandler(String handler) {
             this.handler = handler;
-        }
-
-        @Override
-        public String toString() {
-            return "Channel{id='" + id + "', handler='" + handler + "'}";
         }
     }
 }

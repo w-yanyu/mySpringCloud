@@ -5,9 +5,28 @@ import org.remote.manager.RemoteEnhancerManager;
 import org.remote.manager.impl.DefaultRemoteEnhancerManager;
 import org.remote.registrar.EnhancerRegistrar;
 
-import java.util.ServiceLoader;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class RemoteEnhancerRegistrar implements EnhancerRegistrar {
+    private static final RemoteEnhancerRegistrar instance = new RemoteEnhancerRegistrar();
+    private static final Set<RemoteProxyEnhancer> SET = new HashSet<>();
+
+    private RemoteEnhancerRegistrar() {
+    }
+
+    public static RemoteEnhancerRegistrar getInstance() {
+        return instance;
+    }
+
+    public void add(RemoteProxyEnhancer remoteProxyEnhancer) {
+        SET.add(remoteProxyEnhancer);
+    }
+
+    public boolean addAll(Collection<? extends RemoteProxyEnhancer> c) {
+        return SET.addAll(c);
+    }
 
     @Override
     public RemoteEnhancerManager getEnhancerManager() {
@@ -16,9 +35,7 @@ public class RemoteEnhancerRegistrar implements EnhancerRegistrar {
 
     @Override
     public Iterable<RemoteProxyEnhancer> getIterable() {
-
-        // TODO 写个实现
-        return ServiceLoader.load(RemoteProxyEnhancer.class);
+        return SET;
     }
 
 }

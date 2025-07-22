@@ -1,13 +1,14 @@
 package org.remote.spring.annotation;
 
+import org.remote.spring.component.RemoteHandlerBeanPostProcessor;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Repeatable(RemoteChannelScans.class)
-@Import(value = {RemoteChannelScanRegistrar.class})
-public @interface RemoteChannelScan {
+@Repeatable(RemoteHandlerScans.class)
+@Import({RemoteHandlerScanRegistrar.class, RemoteHandlerBeanPostProcessor.class})
+public @interface RemoteHandlerScan {
     String[] basePackages() default {};
 }

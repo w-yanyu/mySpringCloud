@@ -1,7 +1,7 @@
 package org.remote.spring.annotation;
 
 
-import org.remote.spring.channel.RemoteChannelScannerConfigurer;
+import org.remote.spring.handler.RemoteHandlerScannerConfigurer;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RemoteChannelScanRegistrar implements ImportBeanDefinitionRegistrar, Registrar {
+public class RemoteHandlerScanRegistrar implements ImportBeanDefinitionRegistrar, Registrar {
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        AnnotationAttributes mapperScanAttrs = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(RemoteChannelScan.class.getName()));
+        AnnotationAttributes mapperScanAttrs = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(RemoteHandlerScan.class.getName()));
         if (mapperScanAttrs != null) {
             this.registerBeanDefinitions(importingClassMetadata, mapperScanAttrs, registry, generateBaseBeanName(importingClassMetadata, 0));
         }
@@ -24,17 +24,16 @@ public class RemoteChannelScanRegistrar implements ImportBeanDefinitionRegistrar
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata annoMeta, AnnotationAttributes annoAttrs, BeanDefinitionRegistry registry, String beanName) {
-        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RemoteChannelScannerConfigurer.class);
+        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RemoteHandlerScannerConfigurer.class);
         List<String> basePackages = Arrays.stream(annoAttrs.getStringArray("basePackages")).filter(StringUtils::hasText).collect(Collectors.toList());
         if (basePackages.isEmpty()) {
             basePackages.add(getDefaultBasePackage(annoMeta));
         }
         builder.addPropertyValue("basePackages", basePackages.toArray(new String[0]));
-        builder.setRole(2);
         registry.registerBeanDefinition(beanName, builder.getBeanDefinition());
     }
 
-    static class RepeatingRegistrar extends RemoteChannelScanRegistrar {
+    static class RepeatingRegistrar extends RemoteHandlerScanRegistrar {
         RepeatingRegistrar() {
         }
 

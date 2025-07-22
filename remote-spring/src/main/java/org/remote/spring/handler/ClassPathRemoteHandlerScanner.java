@@ -1,35 +1,37 @@
-package org.remote.spring.channel;
+package org.remote.spring.handler;
 
+import org.remote.enhancer.RemoteProxyEnhancer;
+import org.remote.spring.annotation.RemoteHandler;
+import org.remote.spring.channel.RemoteChannelFactoryBean;
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
+import org.springframework.core.type.AnnotationMetadata;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.Set;
 
-public class ClassPathRemoteChannelScanner extends ClassPathBeanDefinitionScanner {
+public class ClassPathRemoteHandlerScanner extends ClassPathBeanDefinitionScanner {
 
     private Class<? extends RemoteChannelFactoryBean> remoteChannelFactoryBeanClass = RemoteChannelFactoryBean.class;
-    private final Set<Class<?>> channelClassSet = ChannelBeanFactory.getInstance().getChannelClassSet();
 
-    public ClassPathRemoteChannelScanner(BeanDefinitionRegistry registry) {
+    public ClassPathRemoteHandlerScanner(BeanDefinitionRegistry registry) {
         super(registry, false);
     }
 
-    @Override
-    protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
-        Set<BeanDefinitionHolder> beanDefinitions = super.doScan(basePackages);
-        if (!beanDefinitions.isEmpty()) {
-            processBeanDefinitions(beanDefinitions);
-        }
-        return beanDefinitions;
-    }
+//    @Override
+//    protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
+//        Set<BeanDefinitionHolder> beanDefinitions = super.doScan(basePackages);
+//        if (!beanDefinitions.isEmpty()) {
+//            processBeanDefinitions(beanDefinitions);
+//        }
+//        return beanDefinitions;
+//    }
 
     private void processBeanDefinitions(Set<BeanDefinitionHolder> beanDefinitions) {
         BeanDefinitionRegistry registry = this.getRegistry();
@@ -59,17 +61,24 @@ public class ClassPathRemoteChannelScanner extends ClassPathBeanDefinitionScanne
 
                 registry.registerBeanDefinition(proxyHolder.getBeanName(), proxyHolder.getBeanDefinition());
             }
-            channelClassSet.add(beanClass);
         }
+    }
+
+    public void registerFilters() {
+        this.addIncludeFilter((metadataReader, metadataReaderFactory) -> {
+            return true;
+        });
     }
 
     @Override
     protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
-        return beanDefinition.getMetadata().isInterface() && beanDefinition.getMetadata().isIndependent();
-    }
-
-    @Override
-    protected boolean checkCandidate(String beanName, BeanDefinition beanDefinition) {
-        return super.checkCandidate(beanName, beanDefinition);
+        AnnotationMetadata metadata = beanDefinition.getMetadata();
+        String[] interfaceNames = metadata.getInterfaceNames();
+        for (String interfaceName : interfaceNames) {
+            if (RemoteProxyEnhancer.class.getName().equals(interfaceName) && metadata.hasAnnotation(RemoteHandler.class.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

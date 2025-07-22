@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import({RemoteEnhancerScanRegistrar.RepeatingRegistrar.class})
-public @interface RemoteEnhancerScans {
-    RemoteEnhancerScan[] value() default {};
+public @interface RemoteHandlerScans {
+    RemoteHandlerScan[] value();
 }

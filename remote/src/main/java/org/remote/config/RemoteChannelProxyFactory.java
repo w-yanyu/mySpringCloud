@@ -16,6 +16,11 @@ import java.util.Map;
 
 public class RemoteChannelProxyFactory implements InvocationHandler {
 
+    private static final RemoteChannelProxyFactory instance = new RemoteChannelProxyFactory();
+
+    private RemoteChannelProxyFactory() {
+    }
+
     private Map<String, RemoteChannelHandler> handlers;
 
     private RemoteEnhancerManager enhancerManager;
@@ -40,17 +45,10 @@ public class RemoteChannelProxyFactory implements InvocationHandler {
         return result;
     }
 
-    public RemoteChannelProxyFactory() {
-    }
-
     public RemoteChannelProxyFactory(Map<String, RemoteChannelHandler> handlers, RemoteEnhancerManager enhancerManager, Class<?> remoteChannelClass) {
         this.handlers = handlers;
         this.enhancerManager = enhancerManager;
         this.remoteChannelClass = remoteChannelClass;
-    }
-
-    public void setHandler(Map<String, RemoteChannelHandler> handlers) {
-        this.handlers = handlers;
     }
 
     public void setEnhancerManager(RemoteEnhancerManager enhancerManager) {
@@ -59,5 +57,25 @@ public class RemoteChannelProxyFactory implements InvocationHandler {
 
     public void setRemoteChannelClass(Class<?> remoteChannelClass) {
         this.remoteChannelClass = remoteChannelClass;
+    }
+
+    public static RemoteChannelProxyFactory getInstance() {
+        return instance;
+    }
+
+    public Map<String, RemoteChannelHandler> getHandlers() {
+        return handlers;
+    }
+
+    public void setHandlers(Map<String, RemoteChannelHandler> handlers) {
+        this.handlers = handlers;
+    }
+
+    public RemoteEnhancerManager getEnhancerManager() {
+        return enhancerManager;
+    }
+
+    public Class<?> getRemoteChannelClass() {
+        return remoteChannelClass;
     }
 }

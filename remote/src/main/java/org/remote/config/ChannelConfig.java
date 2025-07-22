@@ -25,14 +25,14 @@ public class ChannelConfig {
             RemoteCallWay remoteCallWay = Enum.valueOf(RemoteCallWay.class, Config.get(String.format(PropertiesConstants.CHANNEL_HANDLER, count), "netty").toUpperCase());
             map.put(idStr, remoteCallWay.getHandler());
         }
-        AppConfig appConfig = AppConfig.getInstance();
-        List<AppConfig.Handler> remoteChannel = appConfig.getRemote_channel();
-        for (AppConfig.Handler handler : remoteChannel) {
-            if (!StringUtils.isEmpty(handler.getId())) {
-                RemoteCallWay remoteCallWay = Enum.valueOf(RemoteCallWay.class, (StringUtils.isEmpty(handler.getHandler()) ? "netty" : handler.getHandler()).toUpperCase());
-                map.put(handler.getId(), remoteCallWay.getHandler());
-            }
-        }
+//        AppConfig appConfig = AppConfig.getInstance();
+//        List<AppConfig.Handler> remoteChannel = appConfig.getRemote_channel();
+//        for (AppConfig.Handler handler : remoteChannel) {
+//            if (!StringUtils.isEmpty(handler.getId())) {
+//                RemoteCallWay remoteCallWay = Enum.valueOf(RemoteCallWay.class, (StringUtils.isEmpty(handler.getHandler()) ? "netty" : handler.getHandler()).toUpperCase());
+//                map.put(handler.getId(), remoteCallWay.getHandler());
+//            }
+//        }
     }
 
     public static Map<String, RemoteChannelHandler> get() {
@@ -41,5 +41,9 @@ public class ChannelConfig {
 
     public static RemoteChannelHandler get(String key) {
         return instance.map.get(key);
+    }
+
+    public static RemoteChannelHandler put(String key, RemoteChannelHandler value) {
+        return instance.map.put(key, value);
     }
 }

@@ -37,7 +37,7 @@ public class AnnotationUtils {
         return StringUtils.determineBeanNameFromClass(className);
     }
 
-    private static <T extends Annotation> Object getAnnotationAttribute(AnnotatedElement annotatedElement, Class<T> annotationClass, String attributeName) {
+    public static <T extends Annotation> Object getAnnotationAttribute(AnnotatedElement annotatedElement, Class<T> annotationClass, String attributeName) {
         if (annotatedElement.isAnnotationPresent(annotationClass)) {
             Annotation annotation = annotatedElement.getAnnotation(annotationClass);
             try {
