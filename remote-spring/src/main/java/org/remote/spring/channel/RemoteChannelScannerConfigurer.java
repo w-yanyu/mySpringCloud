@@ -11,6 +11,7 @@ public class RemoteChannelScannerConfigurer implements BeanDefinitionRegistryPos
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         ClassPathRemoteChannelScanner scanner = new ClassPathRemoteChannelScanner(registry);
+        scanner.registerFilters();
         scanner.scan(this.basePackages);
     }
 

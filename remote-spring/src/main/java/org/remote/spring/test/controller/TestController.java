@@ -5,21 +5,21 @@ import org.remote.spring.test.service.Pudao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLOutput;
+
 @RestController
 @RequestMapping("test")
 public class TestController {
 
+    @Autowired
     private Pudao pudao;
-    private Bairong bairong;
 
     @Autowired
-    public TestController(Pudao pudao, Bairong bairong) {
-        this.pudao = pudao;
-        this.bairong = bairong;
-    }
+    private Bairong bairong;
 
     @RequestMapping(method = RequestMethod.GET, value = "/a")
     public void a() {
+        System.out.println("11111");
         pudao.pudao001();
         pudao.pudao002();
         bairong.bairong001();

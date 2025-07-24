@@ -1,6 +1,5 @@
 package org.remote.spring.test;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.remote.spring.annotation.RemoteChannelScan;
 import org.remote.spring.annotation.RemoteEnhancerScan;
 import org.remote.spring.annotation.RemoteHandlerScan;
@@ -8,7 +7,6 @@ import org.remote.spring.annotation.RemoteScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @RemoteScan(

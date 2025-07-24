@@ -8,7 +8,7 @@ import java.lang.reflect.Constructor;
 
 public class RemoteEnhancerFactoryBean<T> implements FactoryBean<T> {
 
-    private final Class<T> mapperInterface;
+    private Class<T> mapperInterface;
 
     public RemoteEnhancerFactoryBean(Class<T> mapperInterface) {
         this.mapperInterface = mapperInterface;
@@ -35,5 +35,9 @@ public class RemoteEnhancerFactoryBean<T> implements FactoryBean<T> {
     @Override
     public boolean isSingleton() {
         return true;
+    }
+
+    public void setMapperInterface(Class<T> mapperInterface) {
+        this.mapperInterface = mapperInterface;
     }
 }

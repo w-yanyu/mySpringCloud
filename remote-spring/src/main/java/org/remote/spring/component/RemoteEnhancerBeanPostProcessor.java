@@ -7,7 +7,9 @@ import org.remote.spring.util.AnnotationUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RemoteEnhancerBeanPostProcessor implements BeanPostProcessor, Ordered {
 
     @Override
