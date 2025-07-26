@@ -25,11 +25,9 @@ public class RemoteChannelProxyFactory implements InvocationHandler {
 
     private RemoteEnhancerManager enhancerManager;
 
-    private Class<?> remoteChannelClass;
-
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        String channel = AnnotationUtils.getBeanNameFromClass(remoteChannelClass, RemoteChannel.class, "value");
+        String channel = AnnotationUtils.getBeanNameFromClass(method.getDeclaringClass(), RemoteChannel.class, "value");
         String methodName = AnnotationUtils.getMethodNameFromAnnotation(method, RemoteServiceCode.class, "value");
         RemoteChannelHandler handler = handlers.get(channel) == null ? new NettyRemoteChannelHandler() : handlers.get(channel);
         List<RemoteProxyEnhancer> enhancers = enhancerManager.getEnhancers(channel, methodName);
@@ -45,18 +43,13 @@ public class RemoteChannelProxyFactory implements InvocationHandler {
         return result;
     }
 
-    public RemoteChannelProxyFactory(Map<String, RemoteChannelHandler> handlers, RemoteEnhancerManager enhancerManager, Class<?> remoteChannelClass) {
+    public RemoteChannelProxyFactory(Map<String, RemoteChannelHandler> handlers, RemoteEnhancerManager enhancerManager) {
         this.handlers = handlers;
         this.enhancerManager = enhancerManager;
-        this.remoteChannelClass = remoteChannelClass;
     }
 
     public void setEnhancerManager(RemoteEnhancerManager enhancerManager) {
         this.enhancerManager = enhancerManager;
-    }
-
-    public void setRemoteChannelClass(Class<?> remoteChannelClass) {
-        this.remoteChannelClass = remoteChannelClass;
     }
 
     public static RemoteChannelProxyFactory getInstance() {
@@ -75,7 +68,4 @@ public class RemoteChannelProxyFactory implements InvocationHandler {
         return enhancerManager;
     }
 
-    public Class<?> getRemoteChannelClass() {
-        return remoteChannelClass;
-    }
 }

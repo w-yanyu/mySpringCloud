@@ -9,6 +9,7 @@ public class TestLogRemoteProxyEnhancer implements RemoteProxyEnhancer {
 
     @Override
     public Object before(String channel, String methodName, Object proxy, Method method, Object[] args) {
+        System.out.println("before...");
         System.out.println("channel:" + channel);
         System.out.println("methodName:" + methodName);
         System.out.println("parameter:" + Arrays.toString(args));
@@ -17,6 +18,7 @@ public class TestLogRemoteProxyEnhancer implements RemoteProxyEnhancer {
 
     @Override
     public Object after(String channel, String methodName, Object proxy, Method method, Object[] args, Object result) {
+        System.out.println("after...");
         System.out.println("channel:" + channel);
         System.out.println("methodName:" + methodName);
         System.out.println("parameter:" + Arrays.toString(args));

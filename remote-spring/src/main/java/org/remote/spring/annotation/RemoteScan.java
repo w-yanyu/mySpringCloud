@@ -1,6 +1,5 @@
 package org.remote.spring.annotation;
 
-import org.remote.spring.component.RemoteChannelBeanPostProcessor;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

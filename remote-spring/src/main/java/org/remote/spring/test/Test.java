@@ -14,8 +14,6 @@ import org.springframework.context.annotation.ComponentScan;
         enhancerScan = @RemoteEnhancerScan(basePackages = {"org.remote.spring.test"}),
         handlerScan = @RemoteHandlerScan(basePackages = {"org.remote.spring.test"})
 )
-//@RemoteHandlerScan(basePackages = {"org.remote.spring.test"})
-@ComponentScan(value = {"org.remote.spring"})
 public class Test {
     public static void main(String[] args) {
         SpringApplication.run(Test.class, args);

@@ -15,7 +15,6 @@ import java.util.Set;
 public class ClassPathRemoteChannelScanner extends ClassPathBeanDefinitionScanner {
 
     private Class<? extends RemoteChannelFactoryBean> remoteChannelFactoryBeanClass = RemoteChannelFactoryBean.class;
-    private final Set<Class<?>> channelClassSet = ChannelBeanFactory.getInstance().getChannelClassSet();
 
     public ClassPathRemoteChannelScanner(BeanDefinitionRegistry registry) {
         super(registry, false);
@@ -54,7 +53,6 @@ public class ClassPathRemoteChannelScanner extends ClassPathBeanDefinitionScanne
 
                 registry.registerBeanDefinition(proxyHolder.getBeanName(), proxyHolder.getBeanDefinition());
             }
-            channelClassSet.add(beanClass);
         }
     }
 

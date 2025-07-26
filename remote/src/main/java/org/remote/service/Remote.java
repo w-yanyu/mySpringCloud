@@ -79,7 +79,6 @@ public class Remote {
             RemoteChannelProxyFactory remoteChannelProxyFactory = RemoteChannelProxyFactory.getInstance();
             remoteChannelProxyFactory.setHandlers(handlers);
             remoteChannelProxyFactory.setEnhancerManager(enhancerRegistrar.register());
-            remoteChannelProxyFactory.setRemoteChannelClass(channelClass);
             return (T) Proxy.newProxyInstance(loader, new Class[]{channelClass}, remoteChannelProxyFactory);
         }
 
