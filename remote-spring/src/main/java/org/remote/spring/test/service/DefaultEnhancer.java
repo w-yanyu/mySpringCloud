@@ -5,7 +5,6 @@ import org.remote.enhancer.RemoteProxyEnhancer;
 
 import java.lang.reflect.Method;
 
-//@RemoteEnhancer
 @RemoteEnhancer(value = "pudao",methods = {"pudao001"})
 public class DefaultEnhancer implements RemoteProxyEnhancer {
     @Override

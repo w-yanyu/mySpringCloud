@@ -9,7 +9,6 @@ import java.lang.reflect.Method;
 public class DefaultRemoteChannelHandler implements RemoteChannelHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println(proxy.getClass().getName());
         System.out.println(method.getName()+",common Handler ...>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         return new Object();
     }
