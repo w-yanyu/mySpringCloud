@@ -1,5 +1,6 @@
 package com.example.common.config;
 
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -24,4 +25,5 @@ public class NormalConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
 }

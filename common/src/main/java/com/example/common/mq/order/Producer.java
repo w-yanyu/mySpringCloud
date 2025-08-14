@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
  * @Version 1.0
  * @Description TODO
  **/
-@Component
+//@Component
 public class Producer {
 
-    @Autowired
+    //@Autowired
     private RocketMQTemplate rocketMQTemplate;
 
     @Value("${mq.order.topic}")
